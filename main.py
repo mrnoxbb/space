@@ -8,6 +8,7 @@ from tkinter import filedialog, messagebox, ttk
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "space.db")
 
+<<<<<<< HEAD
 COLORS = {
     "primary": "#1E1E2F",
     "secondary": "#FFD700",
@@ -21,6 +22,8 @@ COLORS = {
     "accent_yellow": "#f6c90e",
 }
 
+=======
+>>>>>>> main
 STATIONS = [
     {"name": "Table 1", "type": "table", "rate_per_hour": 60.0},
     {"name": "Table 2", "type": "table", "rate_per_hour": 60.0},
@@ -96,6 +99,7 @@ def now_iso():
     return dt.datetime.now().isoformat(timespec="seconds")
 
 
+<<<<<<< HEAD
 class ToolTip:
     def __init__(self, widget, text):
         self.widget = widget
@@ -129,6 +133,8 @@ class ToolTip:
             self.tip = None
 
 
+=======
+>>>>>>> main
 class StationState:
     def __init__(self, station, on_update):
         self.station = station
@@ -197,6 +203,7 @@ class SpaceApp:
         self._schedule_tick()
 
     def _setup_style(self):
+<<<<<<< HEAD
         self.root.configure(bg=COLORS["background"])
         style = ttk.Style(self.root)
         style.theme_use("clam")
@@ -223,12 +230,36 @@ class SpaceApp:
     def _build_ui(self):
         header = ttk.Frame(self.root, padding=(16, 12))
         header.pack(fill="x")
+=======
+        self.root.configure(bg="#0B0B2A")
+        style = ttk.Style(self.root)
+        style.theme_use("clam")
+        style.configure("TFrame", background="#0B0B2A")
+        style.configure("TLabel", background="#0B0B2A", foreground="#FFD700")
+        style.configure("Header.TLabel", font=("Segoe UI", 14, "bold"))
+        style.configure("Status.TLabel", background="#101038", foreground="#FFD700")
+        style.configure("TButton", background="#1C1C3A", foreground="#FFD700")
+        style.map("TButton", background=[("active", "#2A2A5A")])
+        style.configure("Treeview", background="#0F0F33", foreground="#FFD700", fieldbackground="#0F0F33")
+        style.map("Treeview", background=[("selected", "#2A2A5A")])
+        style.configure("TNotebook", background="#0B0B2A")
+        style.configure("TNotebook.Tab", background="#1C1C3A", foreground="#FFD700")
+        style.map("TNotebook.Tab", background=[("selected", "#2A2A5A")])
+
+    def _build_ui(self):
+        header = ttk.Frame(self.root)
+        header.pack(fill="x", padx=16, pady=12)
+>>>>>>> main
 
         ttk.Label(header, text="Space Venue Control Center", style="Header.TLabel").pack(side="left")
         ttk.Label(header, textvariable=self.status_var, style="Status.TLabel").pack(side="right")
 
         notebook = ttk.Notebook(self.root)
+<<<<<<< HEAD
         notebook.pack(fill="both", expand=True, padx=16, pady=12)
+=======
+        notebook.pack(fill="both", expand=True, padx=12, pady=8)
+>>>>>>> main
 
         self.dashboard_tab = ttk.Frame(notebook)
         self.items_tab = ttk.Frame(notebook)
@@ -249,6 +280,7 @@ class SpaceApp:
         self._build_settings()
 
     def _build_dashboard(self):
+<<<<<<< HEAD
         ttk.Label(self.dashboard_tab, text="Live Stations", style="Header.TLabel").pack(anchor="w", pady=8, padx=16)
         container = ttk.Frame(self.dashboard_tab, padding=(8, 4))
         container.pack(fill="both", expand=True, padx=12, pady=8)
@@ -256,16 +288,31 @@ class SpaceApp:
         for station in STATIONS:
             frame = ttk.Frame(container, padding=16, style="Card.TFrame")
             frame.pack(fill="x", pady=10)
+=======
+        ttk.Label(self.dashboard_tab, text="Live Stations", style="Header.TLabel").pack(anchor="w", pady=8, padx=12)
+        container = ttk.Frame(self.dashboard_tab)
+        container.pack(fill="both", expand=True, padx=12)
+
+        for station in STATIONS:
+            frame = ttk.Frame(container, padding=12)
+            frame.pack(fill="x", pady=6)
+>>>>>>> main
 
             state = StationState(station, self._update_dashboard)
             self.station_states[station["name"]] = state
 
+<<<<<<< HEAD
             name_label = ttk.Label(frame, text=station["name"], font=("Segoe UI", 12, "bold"), style="Card.TLabel")
             name_label.grid(row=0, column=0, sticky="w", padx=(0, 8), pady=(0, 6))
+=======
+            name_label = ttk.Label(frame, text=station["name"], font=("Segoe UI", 12, "bold"))
+            name_label.grid(row=0, column=0, sticky="w")
+>>>>>>> main
 
             rate_var = tk.DoubleVar(value=station["rate_per_hour"])
             station["rate_var"] = rate_var
 
+<<<<<<< HEAD
             ttk.Label(frame, text="Rate (EGP/hr)", style="Card.TLabel").grid(row=0, column=1, padx=8, pady=(0, 6))
             rate_entry = ttk.Entry(frame, textvariable=rate_var, width=10)
             rate_entry.grid(row=0, column=2, padx=6, pady=(0, 6))
@@ -305,11 +352,42 @@ class SpaceApp:
             ToolTip(pause_btn, "Pause or resume session")
             ToolTip(stop_btn, "Stop session and save")
             ToolTip(reset_btn, "Clear timer and customer info")
+=======
+            ttk.Label(frame, text="Rate (EGP/hr)").grid(row=0, column=1, padx=8)
+            rate_entry = ttk.Entry(frame, textvariable=rate_var, width=10)
+            rate_entry.grid(row=0, column=2, padx=4)
+
+            ttk.Label(frame, text="Customer").grid(row=0, column=3, padx=8)
+            customer_var = tk.StringVar()
+            station["customer_var"] = customer_var
+            customer_entry = ttk.Entry(frame, textvariable=customer_var, width=20)
+            customer_entry.grid(row=0, column=4)
+
+            state_label = ttk.Label(frame, text="Stopped", foreground="#ff5f5f")
+            state_label.grid(row=0, column=5, padx=10)
+            station["state_label"] = state_label
+
+            timer_label = ttk.Label(frame, text="00:00:00", font=("Segoe UI", 12, "bold"))
+            timer_label.grid(row=1, column=0, sticky="w")
+            station["timer_label"] = timer_label
+
+            cost_label = ttk.Label(frame, text="EGP 0.00")
+            cost_label.grid(row=1, column=1, sticky="w")
+            station["cost_label"] = cost_label
+
+            controls = ttk.Frame(frame)
+            controls.grid(row=1, column=3, columnspan=3, sticky="e")
+            ttk.Button(controls, text="Start", command=lambda s=state: self._start_station(s)).pack(side="left", padx=4)
+            ttk.Button(controls, text="Pause", command=lambda s=state: self._pause_station(s)).pack(side="left", padx=4)
+            ttk.Button(controls, text="Stop", command=lambda s=state: self._stop_station(s)).pack(side="left", padx=4)
+            ttk.Button(controls, text="Reset", command=lambda s=state: self._reset_station(s)).pack(side="left", padx=4)
+>>>>>>> main
 
         for i in range(6):
             container.columnconfigure(i, weight=1)
 
     def _build_items(self):
+<<<<<<< HEAD
         header = ttk.Frame(self.items_tab, padding=(12, 8))
         header.pack(fill="x")
         ttk.Label(header, text="Custom Items", style="Header.TLabel").pack(side="left")
@@ -398,11 +476,61 @@ class SpaceApp:
     def _build_reports(self):
         header = ttk.Frame(self.reports_tab, padding=(12, 8))
         header.pack(fill="x")
+=======
+        header = ttk.Frame(self.items_tab)
+        header.pack(fill="x", padx=12, pady=8)
+        ttk.Label(header, text="Custom Items", style="Header.TLabel").pack(side="left")
+        ttk.Button(header, text="Add Item", command=self._add_item).pack(side="right")
+
+        self.items_tree = ttk.Treeview(self.items_tab, columns=("price"), show="headings", height=10)
+        self.items_tree.heading("price", text="Price (EGP)")
+        self.items_tree.pack(fill="both", expand=True, padx=12)
+
+        controls = ttk.Frame(self.items_tab)
+        controls.pack(fill="x", padx=12, pady=8)
+        ttk.Button(controls, text="Edit", command=self._edit_item).pack(side="left")
+        ttk.Button(controls, text="Delete", command=self._delete_item).pack(side="left", padx=6)
+        ttk.Button(controls, text="Sell", command=self._sell_item).pack(side="left", padx=6)
+
+    def _build_cash(self):
+        header = ttk.Frame(self.cash_tab)
+        header.pack(fill="x", padx=12, pady=8)
+        ttk.Label(header, text="Cash Register", style="Header.TLabel").pack(side="left")
+
+        form = ttk.Frame(self.cash_tab)
+        form.pack(fill="x", padx=12, pady=6)
+
+        ttk.Label(form, text="Type").grid(row=0, column=0, padx=4, sticky="e")
+        self.cash_type = tk.StringVar(value="deposit")
+        ttk.Combobox(form, textvariable=self.cash_type, values=["deposit", "withdrawal"], width=12).grid(
+            row=0, column=1, padx=4
+        )
+
+        ttk.Label(form, text="Amount (EGP)").grid(row=0, column=2, padx=4, sticky="e")
+        self.cash_amount = tk.DoubleVar(value=0.0)
+        ttk.Entry(form, textvariable=self.cash_amount, width=12).grid(row=0, column=3, padx=4)
+
+        ttk.Label(form, text="Notes").grid(row=0, column=4, padx=4, sticky="e")
+        self.cash_notes = tk.StringVar()
+        ttk.Entry(form, textvariable=self.cash_notes, width=30).grid(row=0, column=5, padx=4)
+
+        ttk.Button(form, text="Add", command=self._add_cash).grid(row=0, column=6, padx=6)
+
+        self.cash_tree = ttk.Treeview(self.cash_tab, columns=("type", "amount", "notes", "ts"), show="headings")
+        for col, label in zip(("type", "amount", "notes", "ts"), ("Type", "Amount", "Notes", "Time")):
+            self.cash_tree.heading(col, text=label)
+        self.cash_tree.pack(fill="both", expand=True, padx=12, pady=6)
+
+    def _build_reports(self):
+        header = ttk.Frame(self.reports_tab)
+        header.pack(fill="x", padx=12, pady=8)
+>>>>>>> main
         ttk.Label(header, text="Financial Reports", style="Header.TLabel").pack(side="left")
         ttk.Button(header, text="Daily Report", command=lambda: self._build_report("daily")).pack(side="right")
         ttk.Button(header, text="Monthly Report", command=lambda: self._build_report("monthly")).pack(side="right", padx=6)
         ttk.Button(header, text="Export CSV", command=self._export_report).pack(side="right", padx=6)
 
+<<<<<<< HEAD
         report_frame = ttk.Frame(self.reports_tab, padding=(12, 4))
         report_frame.pack(fill="both", expand=True)
         self.report_text = tk.Text(
@@ -419,13 +547,24 @@ class SpaceApp:
 
     def _build_settings(self):
         ttk.Label(self.settings_tab, text="Settings", style="Header.TLabel").pack(anchor="w", padx=16, pady=12)
+=======
+        self.report_text = tk.Text(self.reports_tab, height=22, bg="#0F0F33", fg="#FFD700", insertbackground="#FFD700")
+        self.report_text.pack(fill="both", expand=True, padx=12, pady=8)
+
+    def _build_settings(self):
+        ttk.Label(self.settings_tab, text="Settings", style="Header.TLabel").pack(anchor="w", padx=12, pady=8)
+>>>>>>> main
         rtl_check = ttk.Checkbutton(
             self.settings_tab,
             text="Enable Arabic (RTL) numerals",
             variable=self.rtl,
             command=self._toggle_rtl,
         )
+<<<<<<< HEAD
         rtl_check.pack(anchor="w", padx=16, pady=6)
+=======
+        rtl_check.pack(anchor="w", padx=12, pady=4)
+>>>>>>> main
 
     def _toggle_rtl(self):
         self._update_dashboard()
@@ -433,6 +572,7 @@ class SpaceApp:
         self._refresh_cash()
         self.status_var.set("Arabic numerals enabled" if self.rtl.get() else "Arabic numerals disabled")
 
+<<<<<<< HEAD
     def _sort_tree(self, tree, col):
         data = [(tree.set(item, col), item) for item in tree.get_children("")]
         try:
@@ -442,6 +582,8 @@ class SpaceApp:
         for index, (_value, item) in enumerate(data):
             tree.move(item, "", index)
 
+=======
+>>>>>>> main
     def _update_dashboard(self):
         for station in STATIONS:
             state = self.station_states[station["name"]]
@@ -453,11 +595,19 @@ class SpaceApp:
             station["cost_label"].configure(text=format_currency(cost, self.rtl.get()))
             if state.running:
                 if state.paused:
+<<<<<<< HEAD
                     station["state_label"].configure(text="Paused", foreground=COLORS["accent_yellow"])
                 else:
                     station["state_label"].configure(text="Active", foreground=COLORS["accent_green"])
             else:
                 station["state_label"].configure(text="Stopped", foreground=COLORS["accent_red"])
+=======
+                    station["state_label"].configure(text="Paused", foreground="#f6c90e")
+                else:
+                    station["state_label"].configure(text="Active", foreground="#7CFF8A")
+            else:
+                station["state_label"].configure(text="Stopped", foreground="#ff5f5f")
+>>>>>>> main
 
     def _schedule_tick(self):
         self._update_dashboard()
@@ -512,6 +662,7 @@ class SpaceApp:
         for row in self.items_tree.get_children():
             self.items_tree.delete(row)
         with sqlite3.connect(DB_PATH) as conn:
+<<<<<<< HEAD
             query = "SELECT id, name, price FROM items ORDER BY name"
             rows = conn.execute(query).fetchall()
             search_term = self.item_search.get().strip().lower() if hasattr(self, "item_search") else ""
@@ -520,6 +671,14 @@ class SpaceApp:
                     continue
                 price_text = format_currency(price, self.rtl.get())
                 self.items_tree.insert("", "end", iid=str(item_id), values=(name, price_text))
+=======
+            for item_id, name, price in conn.execute("SELECT id, name, price FROM items ORDER BY name"):
+                label = f"{name}"
+                price_text = format_currency(price, self.rtl.get())
+                self.items_tree.insert("", "end", iid=str(item_id), values=(price_text,), text=label)
+        self.items_tree.configure(displaycolumns=("price",))
+        self.items_tree["show"] = "headings"
+>>>>>>> main
 
     def _add_item(self):
         ItemDialog(self.root, "Add Item", self._save_new_item)
@@ -599,6 +758,7 @@ class SpaceApp:
         for row in self.cash_tree.get_children():
             self.cash_tree.delete(row)
         with sqlite3.connect(DB_PATH) as conn:
+<<<<<<< HEAD
             rows = conn.execute(
                 "SELECT id, type, amount, notes, ts FROM cash_transactions ORDER BY ts DESC"
             ).fetchall()
@@ -607,6 +767,11 @@ class SpaceApp:
                 searchable = f"{tx_type} {notes or ''} {ts}".lower()
                 if search_term and search_term not in searchable:
                     continue
+=======
+            for tx_id, tx_type, amount, notes, ts in conn.execute(
+                "SELECT id, type, amount, notes, ts FROM cash_transactions ORDER BY ts DESC"
+            ):
+>>>>>>> main
                 self.cash_tree.insert(
                     "", "end", iid=str(tx_id), values=(tx_type, format_currency(amount, self.rtl.get()), notes, ts)
                 )

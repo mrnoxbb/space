@@ -8,7 +8,10 @@ Desktop application for managing billiards tables and PlayStations at the "Space
 - Cash register tracking (deposits/withdrawals)
 - Daily/monthly financial reports with CSV export
 - Optional Arabic numeral display toggle
+<<<<<<< HEAD
 - Search + sortable columns for items and cash transactions
+=======
+>>>>>>> main
 
 ## Requirements
 - Python 3.x (standard library only)
